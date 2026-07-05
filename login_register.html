@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BloodBridge - Access Portal</title>
+    <link rel="stylesheet" href="login_register.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="auth-page">
+    <div class="auth-container">
+      <div class="auth-back">
+        <a href="landing.html">← Back to Home</a>
+      </div>
+      <div class="auth-logo">BloodBridge</div>
+
+      <div class="auth-card" id="loginCard">
+        <h2>Secure Log In</h2>
+        <p>Welcome back! Enter your credentials to access your dashboard.</p>
+
+        <form class="auth-form" id="loginForm" novalidate>
+          <div class="form-group">
+            <label for="loginEmail">Email Address</label>
+            <input
+              type="email"
+              id="loginEmail"
+              placeholder="name@example.com"
+              required
+            />
+            <span class="error-message" id="loginEmailError"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="loginPassword">Password</label>
+            <input
+              type="password"
+              id="loginPassword"
+              placeholder="••••••••"
+              required
+            />
+            <span class="error-message" id="loginPasswordError"></span>
+          </div>
+
+          <button type="submit" class="btn-auth">Log In</button>
+        </form>
+        <div class="auth-footer">
+          <p>
+            New to BloodBridge?
+            <a href="#" id="showRegister">Create an account</a>
+          </p>
+        </div>
+      </div>
+
+      <div class="auth-card hidden" id="registerCard">
+        <h2>Create Your Account</h2>
+        <p>Join the network and help save lives nearby.</p>
+
+        <form class="auth-form" id="registerForm" novalidate>
+          <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" placeholder="John Doe" required />
+            <span class="error-message" id="fullNameError"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="registerEmail">Email Address</label>
+            <input
+              type="email"
+              id="registerEmail"
+              placeholder="name@example.com"
+              required
+            />
+            <span class="error-message" id="registerEmailError"></span>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="bloodType">Blood Type</label>
+              <select id="bloodType" required>
+                <option value="" disabled selected>Select</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+              </select>
+              <span class="error-message" id="bloodTypeError"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="role">Register as a:</label>
+              <select id="role" required>
+                <option value="" disabled selected>Select role</option>
+                <option value="donor">Donor (Give Blood)</option>
+                <option value="patient">Patient / Hospital</option>
+              </select>
+              <span class="error-message" id="roleError"></span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="registerPassword">Password</label>
+            <input
+              type="password"
+              id="registerPassword"
+              placeholder="Minimum 8 characters"
+              required
+            />
+            <span class="error-message" id="registerPasswordError"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <input
+              type="password"
+              id="confirmPassword"
+              placeholder="••••••••"
+              required
+            />
+            <span class="error-message" id="confirmPasswordError"></span>
+          </div>
+
+          <button type="submit" class="btn-auth">Register</button>
+        </form>
+        <div class="auth-footer">
+          <p>
+            Already have an account?
+            <a href="#" id="showLogin">Log In instead</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script src="validation.js"></script>
+  </body>
+</html>
