@@ -73,15 +73,18 @@ document.addEventListener("DOMContentLoaded", function () {
     previewUnitLabel.innerText = `${unitInput.value} Unit${unitInput.value > 1 ? 's' : ''} required • Just now`;
   }
 
-  document.getElementById("bloodRequestForm").addEventListener("submit", function(e) {
+  //Geocoding i sakte per lokacionin
+  document.getElementById("bloodRequestForm").addEventListener("submit", async function(e) {
     e.preventDefault();
     let valid = true;
+
+    const activeRadio = document.querySelector("input[name='urgency']:checked");
 
     if(!selectedBloodType) {
       document.getElementById("bloodTypeError").innerText = "Please specify a required blood classification type.";
       valid = false;
     }
-    if(!document.querySelector("input[name='urgency']:checked")) {
+    if(!activeRadio) {
       document.getElementById("urgencyError").innerText = "Urgency parameter level selection is mandatory.";
       valid = false;
     }
@@ -91,7 +94,34 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if(valid) {
-      alert("Blood Request published successfully!");
+      const locationText = locationInput.value.trim();
+      const urgencyVal = activeRadio.value;
+
+      try {
+        // Kerkojme koordinatat reale gjeografike nepermjet API-se se OpenStreetMap
+        const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(locationText)}`);
+        const data = await response.json();
+
+        let lat, lng;
+
+        if (data && data.length > 0) {
+          // Marrja e koordinatave te sakta reale
+          lat = parseFloat(data[0].lat);
+          lng = parseFloat(data[0].lon);
+        } else {
+          // Fallback te koordinatat e Prishtines vetem nese lokacioni nuk gjendet fare ne harte
+          lat = 42.6667;
+          lng = 21.1667;
+        }
+
+        const queryParams = `?lat=${lat}&lng=${lng}&success=true&urgency=${urgencyVal}&location=${encodeURIComponent(locationText)}`;
+        window.location.href = "confirmation.html" + queryParams;
+
+      } catch (error) {
+        console.error("Geocoding Error:", error);
+        // Ne rast gabimi rrjeti
+        window.location.href = `confirmation.html?lat=42.6667&lng=21.1667&success=true&urgency=${urgencyVal}&location=${encodeURIComponent(locationText)}`;
+      }
     }
   });
 });
